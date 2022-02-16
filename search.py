@@ -132,10 +132,38 @@ def find_path(start, goal, map):
     return []
 
 
+def outline_map_path(map, path):
+    """
+    Outlines the coordinates of a map defined by a path.
+    :param map: A 2D list representation of a map.
+    :param path: A list of tuples, each of which are an x,y coordinate.
+    :return: A copy of the provided map that has had its path outlined.
+    """
+
+    outlined_map = map.copy()
+
+    # Mark the coord in the path with an '*' on the map.
+    for x, y in path:
+        row = outlined_map[y]  # row is of type string which is immutable.
+        list_row = list(row)  # To get around the immutable string, it is converted to a list.
+        list_row[x] = '*'  # The specific character at the coordinate can now be modified.
+        outlined_map[y] = ''.join(list_row)  # The list is converted back to a string.
+
+    return outlined_map
+
+
+# ////////////////////////////////////////////////////////////////////////////////
+# // Program execution. The following lines can be modified to suit your needs. //
+# ////////////////////////////////////////////////////////////////////////////////
+
 map = read_map_from_file('map01.txt')
 print_map(map)
+print()
 
 start = (2, 2)
 goal = (5, 7)
 
-print(find_path(start, goal, map))
+optimal_path = find_path(start, goal, map)
+
+outlined_map = outline_map_path(map, optimal_path)
+print_map(outlined_map)
