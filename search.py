@@ -134,9 +134,9 @@ def find_path(start, goal, map):
 
 def outline_map_path(map, path):
     """
-    Outlines the coordinates of a map defined by a path.
+    Outlines a map with a provided path.
     :param map: A 2D list representation of a map.
-    :param path: A list of tuples, each of which are an x,y coordinate.
+    :param path: A list of tuples, each of which are an x, y coordinate.
     :return: A copy of the provided map that has had its path outlined.
     """
 
