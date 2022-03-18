@@ -38,6 +38,44 @@ class WorldMap:
                 print(self.play_map[i][j], end='')
             print()
 
+    def get_adjacent_options(self, reference_position):
+        """
+        Gets the positions adjacent to a reference position that can be moved to in the map.
+        :param reference_position: The position from which adjacent movable positions will be located.
+        :return: A list of (x, y) tuple positions adjacent to the reference position that can be moved to.
+        """
+
+        x, y = reference_position
+
+        map_height = len(self.play_map)
+        map_width = len(self.play_map[0])
+
+        options = []
+
+        # If the x and y coordinates are not within the map, return an empty list.
+        if x < 0 or y < 0:
+            return options
+        elif x > map_width - 1 or y > map_height - 1:
+            return options
+
+        # Check if moving right is possible.
+        if x < map_width - 1 and self.play_map[y][x + 1] != '0':
+            options.append((x + 1, y))
+
+        # Check if moving left is possible.
+        if x > 0 and self.play_map[y][x - 1] != '0':
+            options.append((x - 1, y))
+
+        # Check if moving down is possible.
+        if y < map_height - 1 and self.play_map[y + 1][x] != '0':
+            options.append((x, y + 1))
+
+        # Check if moving up is possible.
+        if y > 0 and self.play_map[y - 1][x] != '0':
+            options.append((x, y - 1))
+
+        return options
+
 
 def read_map_from_file(file_name):
     """
@@ -214,3 +252,7 @@ print()
 map1 = WorldMap()
 map1.read_from_file('map01.txt')
 map1.print()
+
+reference_point = (2, 4)
+
+print('Movable locations adjacent to {0} are: {1}'.format(reference_point, map1.get_adjacent_options(reference_point)))
