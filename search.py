@@ -1,5 +1,44 @@
 from queue import PriorityQueue
 
+
+class WorldMap:
+
+    def __init__(self):
+        self.play_map = []
+        self.name = None
+
+    def is_populated(self):
+        return len(self.play_map) > 0
+
+    def read_from_file(self, file_name):
+        self.play_map = []
+        self.name = file_name
+
+        with open(file_name, 'r') as file_reader:
+            line = file_reader.readline()
+
+            while line != '':
+                self.play_map.append(line.rstrip())  # Remove tailing newline character, if one exists.
+                line = file_reader.readline()
+
+    def print(self):
+        """
+        Prints out the 2D map if it's populated.
+        :return: Nothing
+        """
+
+        if not self.is_populated():
+            return
+
+        map_height = len(self.play_map)
+        map_width = len(self.play_map[0])
+
+        for i in range(0, map_height):
+            for j in range(0, map_width):
+                print(self.play_map[i][j], end='')
+            print()
+
+
 def read_map_from_file(file_name):
     """
     Creates a 2D list map by reading a map from a text file.
@@ -167,3 +206,11 @@ optimal_path = find_path(start, goal, map)
 
 outlined_map = outline_map_path(map, optimal_path)
 print_map(outlined_map)
+print()
+
+
+# //////////// Working with Classes ////////////
+
+map1 = WorldMap()
+map1.read_from_file('map01.txt')
+map1.print()
